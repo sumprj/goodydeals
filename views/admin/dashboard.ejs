@@ -15,7 +15,7 @@
     <script>
         window.allItems = <%- JSON.stringify(items) %>
     </script>
-    <script src="../main.js"></script>
+    <script src="../admin/dashboard.js"></script>
 </head>
 
 <body>
@@ -54,12 +54,12 @@
         <table class="table">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col" id="category-header" class="table-header clickable">Category <span class="invisible" id = "category-toggler">▲</span class="toggle-arrow"></th>
-                    <th scope="col" id="skuid-header" class="table-header clickable">SKU Id <span class="invisible" id = "skuid-toggler">▲</span class="toggle-arrow"></th>
-                    <th scope="col" id="title-header" class="table-header clickable">Title <span class="invisible" id = "title-toggler">▲</span class="toggle-arrow"></th>
-                    <th scope="col" id="description-header" class="table-header">Description</th>
-                    <th scope="col" id="price-header" class="table-header clickable">Price <span class="invisible" id = "price-toggler">▲</span class="toggle-arrow"></th>
-                    <th scope="col" id="action-header" class="table-header">Action</th>
+                    <th scope="col" id="category-header" class="table-header clickable">Category <span class="invisible" id = "category-toggler">▲</span></th>
+                    <th scope="col" id="skuid-header" class="table-header clickable">SKU Id <span class="invisible" id = "skuid-toggler">▲</span></th>
+                    <th scope="col" id="title-header" class="table-header clickable">Title <span class="invisible" id = "title-toggler">▲</span></th>
+                    <th scope="col" id="description-header" class="table-header">Description <span> </span></th>
+                    <th scope="col" id="price-header" class="table-header clickable">Price <span class="invisible" id = "price-toggler">▲</span></th>
+                    <th scope="col" id="action-header" class="table-header">Action <span> </span></th>
                 </tr>
             </thead>
             <tbody>

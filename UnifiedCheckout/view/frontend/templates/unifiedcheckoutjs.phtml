@@ -1,0 +1,22 @@
+<?php
+
+/* @var $block \CyberSource\UnifiedCheckout\Block\Unified */
+
+?>
+<script type="text/javascript">
+
+    require.config({
+        paths: {
+            "unified": '<?php echo $block->isSandbox()
+                ? 'https://apitest.cybersource.com/up/v1/assets/0.6.0/SecureAcceptance'
+                : 'https://api.cybersource.com/up/v1/assets/0.6.0/SecureAcceptance'; ?>'
+        },
+        shim: {
+            "unified": {
+                exports: 'Accept'
+            }
+        }
+    });
+
+</script>
+

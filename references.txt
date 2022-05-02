@@ -1,0 +1,31 @@
+for cart notifications -> https://getbootstrap.com/docs/4.3/components/badge/#links
+
+adminRole: {owner}
+adminUser: username, password, firstName, lastName, email, role
+store:{name:}
+shippingMethod:{}
+payments{enabled:0/1 title:string merchant id:string Rest Key:encrypted key Rest shared secret:encrypted key}
+order:{orderNumber:autoincrement, orderedItems:[item], shippingMethod:}
+customer: email, password, name, address[{street, city, state, country, pincode}]
+item: 
+
+this.category = category;
+        this.skuid = skuid;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+
+
+
+
+Todo: itemcategory database created now goto the additem template and just update the category to dropdown type. -done
+
+create items database and link it with the code -done
+
+add to cart items  and address data should be added to the session.
+
+create payments page radio button -done
+
+unified checkout request builder -
+
+Google pay

@@ -1,6 +1,5 @@
-const { QueryCursor } = require("mongoose");
-
 const router = require("express").Router();
+const {findAllCatalogueProducts} = require('../../helper/dbUtils');
 
 class Item{
     constructor(category, skuid, title, description, price){
@@ -29,12 +28,16 @@ function getItems(){
     ]
 }
 
-router.get("/dashboard", (req, res) => {
+router.get("/", (req, res) => {
     let data = getData();
-    res.render("admin/dashboard", {
-        'shoppingSiteName': data.shoppingSiteName,
-        'items': getItems()
-    });
+    findAllCatalogueProducts((products)=>{
+        console.log(products);
+        res.render("admin/dashboard", {
+            'shoppingSiteName': data.shoppingSiteName,
+            'items': products
+        });
+    })
+    
 })
 
 

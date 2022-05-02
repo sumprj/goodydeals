@@ -2,20 +2,31 @@
   "name": "ecommerce-platform",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.1",
+    "bootstrap": "^4.4.1",
+    "bootstrap-social": "^5.1.1",
+    "bootstrap4": "0.0.1-security",
+    "connect-mongodb-session": "^3.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cybersource-rest-client": "^0.0.37",
     "dotenv": "^16.0.0",
-    "ejs": "^3.1.6",
+    "ejs": "^3.1.7",
     "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "mongodb": "^4.5.0",
     "mongoose": "^5.13.14",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "popper.js": "^1.12.9"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
