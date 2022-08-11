@@ -1,0 +1,18 @@
+{
+    "Payments":[
+        {
+            "section":{
+                "header":"Unified Checkout",
+                "content":[
+                    {
+                        "field":{
+                            "label": "Title",
+                            "type":"text",
+                            "value": "Unified Checkout"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -26,6 +26,48 @@ add to cart items  and address data should be added to the session.
 
 create payments page radio button -done
 
+config unified checkout schema 
+
+BO config for Unified checkout
+
+payment admin config
+
 unified checkout request builder -
 
 Google pay
+
+
+
+Equity:
+-------
+PPMF: 
+        22: 1000 -active
+sensex: 
+        15: 300 - investment pending
+        29: 300 - investment pending
+
+
+debt:
+------
+HDFC Low Duration fund: 
+        02: 300 - active
+        19: 300 - processing
+Aditya Birla sun life corporate bond direct growth: 
+        01: 100 - processing
+        10: 100 -active
+        17: 100 -active
+        24: 100 - processing
+        
+
+
+gold: 
+HDFC Gold Direct plan growth: 
+        10th : 300 - active
+        25th: 300 - investment pending
+
+1600:1000:600
+8:5:3
+
+
+
+routes-> controller-> service-> repository

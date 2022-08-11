@@ -1,6 +1,5 @@
-
-
-
+const {PaymentMethod} = require('../../../helper/dbUtils');
+const unifiedPaymentMethod = new PaymentMethod('unifiedcheckout');
 
 function buildSessionRequest(object)
 {
@@ -10,11 +9,10 @@ function buildSessionRequest(object)
     targetOrigins = ["https://127.0.0.1"];
     request['targetOrigins'] = targetOrigins;
     request['clientVersion'] = "0.6"; 
-
     request['allowedCardNetworks'] = getSupportedNetworks();
     request['allowedPaymentTypes'] = ["PANENTRY","SRC"]; 
     request['country'] = getBillingAddress().countryId;
-    request['locale'] = getLocale();
+    request['locale'] = unifiedPaymentMethod.getLocale();
     request['captureMandate'] = buildCaptureMandate();
     
     request['orderInformation'] = buildOrderInformation(object);
@@ -89,9 +87,3 @@ function getSupportedNetworks()
         'JCB'
     ];
 }
-
-function getLocale(storeId = null)
-{
-    return 'en-us';
-}
-

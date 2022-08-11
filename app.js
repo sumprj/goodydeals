@@ -41,6 +41,7 @@ const adminAddItemRoute = require('./routes/admin/addItem');
 const adminLoginRoute = require('./routes/admin/index');
 const homeRoute = require('./routes/index');
 const checkoutRoute = require('./routes/checkout');
+const paymentConfigRoute = require('./routes/admin/payment/config');
 const { exit } = require('process');
 
 const app = express();
@@ -82,3 +83,4 @@ app.use("/admin/add-item", adminAddItemRoute);
 app.use("/admin", adminLoginRoute);
 app.use("/", homeRoute);
 app.use("/checkout", checkoutRoute);
+app.use('/admin/store/configuration/payments',paymentConfigRoute);

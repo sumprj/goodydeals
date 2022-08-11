@@ -2,6 +2,7 @@ const Role = require('../models/admin/Role');
 const AdminUser = require('../models/admin/User');
 const CatalogueCategory = require('../models/Catalogue/Category');
 const CatalogueProduct = require('../models/Catalogue/Products');
+const paymentConfig = require('../models/Store/Payment/Config');
 
 let createSampleCatalogueDone = false;
 
@@ -104,7 +105,46 @@ async function addNewProduct(productData, callback){
 	callback(response);
 }
 
+async function updatePaymentConfig(code, update, callback){
+	try {
+		await paymentConfig.findOneAndUpdate({
+			paymentCode: code
+		},update);
+		callback(false);	
+	} catch (err) {
+		callback(true);	
+	}
+}
 
+async function getPaymentConfig(filter){
+	return await paymentConfig.find(filter);
+}
+
+async function getPaymentDataByCode(code){
+	try {
+		const payment = await paymentConfig.findOne({paymentCode:code});
+		return payment;		
+	} catch (err) {
+		return {};
+	}
+}
+
+async function getAllPaymentConfig(callback){
+	const paymentConfigData = await getPaymentConfig({});
+	callback(paymentConfigData);
+}
+
+async function getAllPaymentCode(callback){
+	const paymentConfigData = await getPaymentConfig({});
+	const paymentCodes = paymentConfigData.map(payment => payment.paymentCode);
+	callback(paymentCodes);
+}
+
+async function getAllPaymentCodeSync(){
+	const paymentConfigData = await getPaymentConfig({});
+	const paymentCodes = paymentConfigData.map(payment => payment.paymentCode);
+	return paymentCodes;
+}
 
 
 /**
@@ -116,8 +156,11 @@ async function addNewProduct(productData, callback){
  * @param {string} firstname 
  * @param {string} lastname 
  */
-module.exports.createOwner = async function (username, password, email, firstName, lastName){
+async function createOwner(username, password, email, firstName, lastName){
 	const role = new Role({roleName:rolePrivilegeMap[5], privileges:5});
+	const unifiedCheckoutData = new paymentConfig({
+		paymentCode: 'unifiedcheckout',
+	});
 	if(!(await findAdminOwnerRoleSync())){
 		try
 		{
@@ -142,10 +185,11 @@ module.exports.createOwner = async function (username, password, email, firstNam
 			role: await findAdminOwnerRoleSync()
 		});
 		adminUser.save();
+		unifiedCheckoutData.save();
 	}
 }
 
-module.exports.createSampleCatalogue = async function (){
+async function createSampleCatalogue(){
 	const CatalogueCategories = await findCatalogueCategories({});
 	if(!CatalogueCategories){
 		try{
@@ -157,8 +201,60 @@ module.exports.createSampleCatalogue = async function (){
 	}
 }
 
+class PaymentMethod{
+	constructor(code)
+	{
+		this.code = code;
+		this.getPaymentData = getPaymentDataByCode(this.code);
+	}
+	async getMerchantId(){
+		const paymentData = await this.getPaymentData;
+		return paymentData['merchantId'];
+	}
+	async getRestKeyId(){
+		const paymentData = await this.getPaymentData;
+		return paymentData['restKeyId'];
+	}
+	async getRestSharedSecret(){
+		const paymentData = await this.getPaymentData;
+		return paymentData['restSharedSecret'];
+	}
+	async getLocale()
+	{
+		const paymentData = await this.getPaymentData;
+		return paymentData['locale'];
+	}
+	async isActive(){
+		const paymentData = await this.getPaymentData;
+		return paymentData['enabled'];
+	}
+	async isProductionMode(){
+		const paymentData = await this.getPaymentData;
+		return paymentData['productionMode'];
+	}
+	async getTitle(){
+		const paymentData = await this.getPaymentData;
+		return paymentData['title'];
+	}
+	async getcardTypes(){
+		const paymentData = await this.getPaymentData;
+		return paymentData['cardTypes'];
+	}
+}
 
-module.exports.findCatalogueCategories = findCatalogueCategories;
-module.exports.findCatalogueProductBySkuid = findCatalogueProductBySkuid;
-module.exports.addNewProduct = addNewProduct;
-module.exports.findAllCatalogueProducts = findAllCatalogueProducts;
+
+
+
+module.exports = {
+	findCatalogueCategories : findCatalogueCategories,
+	findCatalogueProductBySkuid : findCatalogueProductBySkuid,
+	addNewProduct:addNewProduct,
+	findAllCatalogueProducts : findAllCatalogueProducts,
+	updatePaymentConfig : updatePaymentConfig,
+	getAllPaymentConfig: getAllPaymentConfig,
+	createSampleCatalogue: createSampleCatalogue,
+	createOwner: createOwner,
+	getAllPaymentCode: getAllPaymentCode,
+	getAllPaymentCodeSync: getAllPaymentCodeSync,
+	PaymentMethod: PaymentMethod
+}

@@ -14,7 +14,7 @@ function getSessionMiddleWare(name, path){
     const sessionOptions = {
         name:name,
         secret: 'keyboard cat',
-        cookie: {path: path, secure: false, maxAge: 1000*60*2 },
+        cookie: {path: path, secure: false, maxAge: 1000*60*5 },
         store:sessionStore,
         resave: true,
         saveUninitialized: true,

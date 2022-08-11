@@ -1,0 +1,10 @@
+{
+    "configSectionName":"Unified Checkout",
+    "enabled": 1,
+    "title":"Unified Checkout",
+    "cardTypes": [
+        "VISA",
+        "MASTERCARD"
+    ],
+    "locale": "en_us"
+}

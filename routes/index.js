@@ -25,7 +25,7 @@ router.use(sessionMiddleWare('store','/'));
 router.get("/", (req, res) => {
     console.log(req.session);
     findAllCatalogueProducts((products)=>{
-        res.render("index",{'items':products, cart: req.cookies.cart});
+        res.render("index",{'items':products, cart: req.session.cart});
     })
 })
 
@@ -33,13 +33,16 @@ router.post("/add-to-cart", (req, res) => {
     console.log(req.session);
     console.log(req.body.skuid);
     if(req.body.skuid && !req.session.cart){
-        req.session.cart={};
+        req.session.cart={totalCount:0};
     }
     if(req.session.cart[req.body.skuid]){
         req.session.cart[req.body.skuid]++;
+        req.session.cart.totalCount++;
     }
-    else
+    else{
         req.session.cart[req.body.skuid] = 1;
+        req.session.cart.totalCount++;
+    }
     console.log(req.session);
     res.redirect('/');
 })

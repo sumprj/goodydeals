@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Configuartion</title>
+</head>
+<body>
+    <%= locals.errorMessage %> 
+    <form action="/admin/store/configuration/payments/save" method="post">
+   <% 
+   console.log('Printing in Template');
+   console.log(paymentsConfig);
+   console.log(paymentsConfigAdditionalData);
+        paymentsConfig.forEach(paymentConfig => { 
+            console.log(paymentConfig);
+        if(!paymentConfig.title)
+        {
+            paymentConfig.title = ""
+        }
+        if(!paymentConfig.enabled)
+        {
+            paymentConfig.enabled = 0
+        }
+        if(!paymentConfig.productionMode)
+        {
+            paymentConfig.productionMode = 0
+        }
+        if(!paymentConfig.merchantId)
+        {
+            paymentConfig.merchantId = ""
+        }
+        if(!paymentConfig.restKeyId)
+        {
+            paymentConfig.restKeyId = ""
+        }
+        if(!paymentConfig.restSharedSecret)
+        {
+            paymentConfig.restSharedSecret = ""
+        }
+        if(!paymentConfig.locale)
+        {
+            paymentConfig.locale = "en_us"
+        }
+        if(!paymentsConfigAdditionalData[paymentConfig.paymentCode].backStoreSectionHeader)
+        {
+            paymentConfig.error = true;
+            paymentConfig.errorMessage = "Payment section header is empty or unable to fetch the data";
+        }
+        if(!paymentConfig.paymentCode)
+        {
+            locals.fail = true;
+            locals.failMessage = "Payment code is empty or unable to fetch the data";
+        }
+
+        if (locals.failMessage) {%>
+            <div class="text-danger"><%=locals.failMessage%></div>
+        <% }else{ 
+            enabled_id = 'payment-' + paymentConfig.paymentCode + '-enabled';
+            merchantId_id = 'payment-' + paymentConfig.paymentCode + '-merchantId';
+            restKeyId_id = 'payment-' + paymentConfig.paymentCode + '-restKeyId';
+            restSharedSecret_id = 'payment-' + paymentConfig.paymentCode + '-restSharedSecret';
+            title_id = 'payment-' + paymentConfig.paymentCode + '-title';
+            productionMode_id = 'payment-' + paymentConfig.paymentCode + '-productionMode'
+
+            %>
+
+            <h2><%= paymentsConfigAdditionalData.backStoreSectionHeader %></h2>
+                <div class="form-group">
+                    <label>Enabled</label>
+                    <select class="form-control" id="<%= enabled_id %>" name="<%= enabled_id %>" value="<%= paymentConfig.enabled %>">
+                        <option value="0" <%=(!paymentConfig.enabled||'') && 'selected'%>>No</option>
+                        <option value="1" <%=(paymentConfig.enabled||'') && 'selected'%>>Yes</option>    
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>production Mode</label>
+                    <select class="form-control" id="<%= productionMode_id %>" name="<%= productionMode_id %>" value="<%= paymentConfig.productionMode %>">
+                        <option value="0" <%=(!paymentConfig.productionMode||'') && 'selected'%>>No</option>
+                        <option value="1" <%=(paymentConfig.productionMode||'') && 'selected'%>>Yes</option>    
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Checkout Payment Title</label>
+                    <input type="text" class="form-control" id="<%= title_id %>" name="<%= title_id %>" value="<%= paymentConfig.title %>">
+                </div>
+                <div class="form-group">
+                    <label>Merchant ID</label>
+                    <input type="text" class="form-control" id="<%= merchantId_id %>" name="<%= merchantId_id %>" value="<%= paymentConfig.merchantId %>">
+                </div>
+                <div class="form-group">
+                    <label>Rest Key ID</label>
+                    <input type="text" class="form-control" id="<%= restKeyId_id %>" name="<%= restKeyId_id %>" value="<%= paymentConfig.restKeyId %>">
+                </div>
+                <div class="form-group">
+                    <label>Rest Shared Secret</label>
+                    <input type="password" class="form-control" id="<%= restSharedSecret_id %>" name="<%= restSharedSecret_id %>" value="<%= paymentConfig.restSharedSecret %>">
+                </div>
+                
+        <% } %>
+   <% }) %> 
+   <button class="btn-primary" type="save">Save Configuration</button>
+    </form>
+</body>
+</html>
